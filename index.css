@@ -1,40 +1,225 @@
 /* WORKSPACE STYLES - Trabajo de Arquitectura de Máquinas (StitchMCP Integration) */
 
 /* Global extensions */
+:root {
+    --surface-bright: #353945;
+    --on-primary: #1d00a5;
+    --primary-fixed: #e2dfff;
+    --inverse-on-surface: #2c303c;
+    --surface-container-low: #171b27;
+    --secondary: #c0c1ff;
+    --on-tertiary-fixed-variant: #6900b3;
+    --on-error: #690005;
+    --inverse-surface: #dfe2f2;
+    --on-surface: #dfe2f2;
+    --secondary-fixed-dim: #c0c1ff;
+    --on-secondary: #1000a9;
+    --tertiary-container: #862dd4;
+    --on-secondary-fixed-variant: #2f2ebe;
+    --on-error-container: #ffdad6;
+    --secondary-fixed: #e1e0ff;
+    --surface-container: #1b1f2b;
+    --tertiary-fixed-dim: #ddb7ff;
+    --on-tertiary-fixed: #2c0051;
+    --error: #ffb4ab;
+    --on-background: #dfe2f2;
+    --surface-variant: #313441;
+    --outline: #918fa1;
+    --primary: #c3c0ff;
+    --surface-container-high: #262a36;
+    --surface: #0f131e;
+    --primary-container: #4f46e5;
+    --on-tertiary: #490080;
+    --background: #0f131e;
+    --surface-container-lowest: #0a0e19;
+    --on-primary-fixed: #0f0069;
+    --error-container: #93000a;
+    --primary-fixed-dim: #c3c0ff;
+    --on-secondary-fixed: #07006c;
+    --surface-dim: #0f131e;
+    --on-tertiary-container: #ebd2ff;
+    --inverse-primary: #4d44e3;
+    --on-primary-fixed-variant: #3323cc;
+    --outline-variant: #464555;
+    --tertiary: #ddb7ff;
+    --on-primary-container: #dad7ff;
+    --secondary-container: #3131c0;
+    --surface-tint: #c3c0ff;
+    --surface-container-highest: #313441;
+    --on-surface-variant: #c7c4d8;
+    --tertiary-fixed: #f0dbff;
+    --on-secondary-container: #b0b2ff;
+}
+
 body {
-    background-color: #0f131e;
+    background-color: var(--background);
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
-    color: #dfe2f2;
+    color: var(--on-surface);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body.light-theme {
-    background-color: #f0f4f8;
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --surface-dim: #f1f5f9;
+    --surface-bright: #ffffff;
+    --surface-container: #f1f5f9;
+    --surface-container-low: #f8fafc;
+    --surface-container-lowest: #ffffff;
+    --surface-container-high: #e2e8f0;
+    --surface-container-highest: #cbd5e1;
+    --surface-variant: #f1f5f9;
+    
+    --primary: #4f46e5;
+    --primary-container: #e0e7ff;
+    --on-primary: #ffffff;
+    --on-primary-container: #312e81;
+    
+    --secondary: #0ea5e9;
+    --secondary-container: #e0f2fe;
+    --on-secondary: #ffffff;
+    --on-secondary-container: #0369a1;
+    
+    --on-surface: #0f172a;
+    --on-surface-variant: #475569;
+    --on-background: #0f172a;
+    
+    --outline: #94a3b8;
+    --outline-variant: #cbd5e1;
+    
+    --inverse-surface: #0f172a;
+    --inverse-on-surface: #f8fafc;
+    --inverse-primary: #c3c0ff;
+    
+    background-color: var(--background);
     background-image: none;
-    color: #1f2438;
+    color: var(--on-surface);
 }
 
 body.light-theme .glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    border-color: rgba(9, 105, 218, 0.15);
-    color: #1f2438;
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(79, 70, 229, 0.12);
+    color: var(--on-surface);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
 body.light-theme .glass-card:hover {
-    box-shadow: 0 0 20px rgba(9, 105, 218, 0.15);
+    border-color: rgba(79, 70, 229, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.1), 0 4px 6px -4px rgba(79, 70, 229, 0.1);
 }
 
 body.light-theme .trunk-node {
-    border-color: rgba(9, 105, 218, 0.3);
-    box-shadow: 0 0 40px rgba(9, 105, 218, 0.1);
+    border-color: rgba(79, 70, 229, 0.3);
+    box-shadow: 0 0 40px rgba(79, 70, 229, 0.1);
 }
 
 body.light-theme .path-line {
-    stroke: rgba(0, 0, 0, 0.08);
+    stroke: rgba(0, 0, 0, 0.06);
 }
 
 body.light-theme .content-panel {
-    background-color: #f0f4f8;
+    background-color: var(--background);
+}
+
+body.light-theme .panel-header {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-bottom-color: rgba(79, 70, 229, 0.08) !important;
+}
+
+body.light-theme .connection-line .path-pulse {
+    stroke: var(--primary) !important;
+}
+
+body.light-theme .branch-node:hover ~ .connection-line .path-line.active-line {
+    stroke: var(--primary) !important;
+    filter: drop-shadow(0 0 4px rgba(79, 70, 229, 0.3)) !important;
+}
+
+body.light-theme .path-pulse.pulsing-route {
+    stroke: var(--primary) !important;
+}
+
+body.light-theme button:hover {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+body.light-theme .branch-node:hover,
+body.light-theme aside button:hover {
+    background-color: rgba(79, 70, 229, 0.08) !important;
+}
+
+body.light-theme .border-white\/10 {
+    border-color: rgba(79, 70, 229, 0.15) !important;
+}
+
+body.light-theme .border-white\/5 {
+    border-color: rgba(79, 70, 229, 0.08) !important;
+}
+
+body.light-theme .bg-white\/5 {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.light-theme .bg-black\/20 {
+    background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+body.light-theme .bg-black\/40 {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+body.light-theme .text-white\/40 {
+    color: rgba(15, 23, 42, 0.6) !important;
+}
+
+body.light-theme .text-white\/30 {
+    color: rgba(15, 23, 42, 0.4) !important;
+}
+
+body.light-theme .text-white {
+    color: #0f172a !important;
+}
+
+body.light-theme textarea#asm-code-textarea, 
+body.light-theme textarea.arduino-textarea {
+    color: #1e1b4b !important;
+}
+
+body.light-theme .text-cyan-300\/80 {
+    color: #0369a1 !important;
+}
+
+body.light-theme .text-cyan-500 {
+    color: #0284c7 !important;
+}
+
+body.light-theme .console-output {
+    color: #4338ca !important;
+}
+
+body.light-theme .opt-indicator {
+    border-color: rgba(0, 0, 0, 0.15) !important;
+    color: var(--on-surface) !important;
+}
+
+body.light-theme .editor-block {
+    background-color: #f8fafc !important;
+    border-color: rgba(79, 70, 229, 0.15) !important;
+}
+
+body.light-theme .editor-header {
+    background-color: #e2e8f0 !important;
+    color: #475569 !important;
+    border-color: rgba(79, 70, 229, 0.15) !important;
+}
+
+body.light-theme .console-box {
+    background-color: #f1f5f9 !important;
+    border-color: rgba(79, 70, 229, 0.15) !important;
+}
+
+body.light-theme .console-box h6 {
+    color: #475569 !important;
 }
 
 /* Glass Card styling */
@@ -111,7 +296,7 @@ body.light-theme .content-panel {
 }
 
 .branch-node:hover ~ .connection-line .path-line.active-line {
-    stroke: #c3c0ff;
+    stroke: var(--primary);
     stroke-width: 2.2;
     filter: drop-shadow(0 0 8px #4f46e5);
 }
@@ -119,7 +304,7 @@ body.light-theme .content-panel {
 /* Path running pulse on node click */
 .path-pulse.pulsing-route {
     opacity: 1 !important;
-    stroke: #c3c0ff;
+    stroke: var(--primary);
     stroke-width: 3.5;
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
@@ -255,12 +440,12 @@ body.light-theme .content-panel {
     background-color: rgba(255,255,255,0.02);
     border: 2px solid rgba(255,255,255,0.08);
 }
-.cpu-box { border-color: #4f46e5; }
-.mem-box { border-color: #c3c0ff; }
+.cpu-box { border-color: var(--primary); }
+.mem-box { border-color: var(--secondary); }
 .vn-sub { font-size: 0.75rem; background-color: rgba(0,0,0,0.4); padding: 0.3rem; border-radius: 4px; margin-bottom: 0.4rem; }
 .mem-slot { font-size: 0.75rem; padding: 0.4rem; border-radius: 4px; margin-bottom: 0.4rem; border: 1px solid rgba(255,255,255,0.05); }
-.code-slot { background-color: rgba(79, 70, 229, 0.08); border-color: rgba(79, 70, 229, 0.3); color: #c3c0ff; }
-.data-slot { background-color: rgba(195, 192, 255, 0.08); border-color: rgba(195, 192, 255, 0.3); color: #c3c0ff; }
+.code-slot { background-color: rgba(79, 70, 229, 0.08); border-color: rgba(79, 70, 229, 0.3); color: var(--primary); }
+.data-slot { background-color: rgba(195, 192, 255, 0.08); border-color: rgba(195, 192, 255, 0.3); color: var(--secondary); }
 
 .vn-buses {
     display: flex;
@@ -313,7 +498,7 @@ body.light-theme .content-panel {
     font-size: 0.85rem;
     font-weight: 600;
     border-bottom: 1px solid rgba(255,255,255,0.08);
-    color: #c3c0ff;
+    color: var(--primary);
 }
 .chip-body { padding: 1rem; }
 
@@ -333,12 +518,12 @@ body.light-theme .content-panel {
     border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 .data-table th {
-    background-color: rgba(0,0,0,0.4);
-    color: #ffffff;
+    background-color: var(--surface-container-high);
+    color: var(--on-surface);
     font-weight: 600;
 }
 .data-table tr:last-child td { border-bottom: none; }
-.data-table td { color: #c7c4d8; }
+.data-table td { color: var(--on-surface); }
 
 .vs-container {
     display: flex;
@@ -455,7 +640,7 @@ textarea#asm-code-textarea, textarea.arduino-textarea {
     font-family: var(--font-headings);
     font-size: 1rem;
     margin-bottom: 0.75rem;
-    color: #c3c0ff;
+    color: var(--primary);
     border-bottom: 1px solid rgba(255,255,255,0.08);
     padding-bottom: 0.35rem;
 }
@@ -477,9 +662,9 @@ textarea#asm-code-textarea, textarea.arduino-textarea {
     box-shadow: 0 0 10px rgba(79, 70, 229, 0.25);
     background-color: rgba(79, 70, 229, 0.05);
 }
-.reg-lbl { font-size: 0.65rem; color: #c7c4d8; font-weight: 600; }
-.reg-val { font-family: var(--font-mono); font-weight: 700; font-size: 0.9rem; color: #ffffff; }
-.highlight-reg { border-color: rgba(195, 192, 255, 0.3); }
+.reg-lbl { font-size: 0.65rem; color: var(--on-surface-variant); font-weight: 600; }
+.reg-val { font-family: var(--font-mono); font-weight: 700; font-size: 0.9rem; color: var(--on-surface); }
+.highlight-reg { border-color: var(--primary) !important; }
 
 .console-box {
     background-[#05060d];
