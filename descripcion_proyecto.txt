@@ -39,10 +39,6 @@ ESTRUCTURA DE CONTENIDOS (UNIDADES Y SIMULADORES)
 7. Tutorial Arduino y Proteus
    - Guia visual detallada del proceso de programacion del sketch Blink en Arduino IDE, el diseno del circuito en PROTEUS utilizando la placa Simulino Uno, la inyeccion del archivo binario (.hex) y la validacion del funcionamiento del LED en encendido y apagado.
 
-8. Zona de Simuladores (Playground)
-   - Simulador de Ensamblador emu8086: Ejecuta paso a paso o de forma automatica codigos de prueba en ensamblador 8086 (como sumas, bucles y condicionales), mostrando la actualizacion en tiempo real del Program Counter (IP), Registros de proposito general y banderas.
-   - Simulador de Placa Arduino: Simula interactivamente la ejecucion en bucle del codigo Blink en una placa Arduino Uno virtual, encendiendo y apagando un LED grafico y destellando los pines de comunicacion RX/TX.
-
 --------------------------------------------------------------------------------
 CARACTERISTICAS TECNICAS Y DE DISENO
 --------------------------------------------------------------------------------

@@ -240,31 +240,23 @@
                     </div>
 
                     <!-- Tutorial 1 (emu8086) -->
-                    <div onclick="triggerBranchTransition('node-6')" class="branch-node glass-card rounded-full px-5 py-3 flex items-center justify-between gap-3 cursor-pointer border-dashed border-outline-variant hover:border-secondary/50 transition-all duration-300 w-52" data-id="node-6" id="btn-node-6">
+                    <div onclick="triggerBranchTransition('node-6')" class="branch-node glass-card rounded-full px-5 py-3 flex items-center justify-between gap-3 cursor-pointer border border-white/10 hover:border-secondary/50 transition-all duration-300 w-52" data-id="node-6" id="btn-node-6">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-pink-500 shadow-[0_0_8px_#ff7597]"></span>
                             <span class="font-headline-lg-mobile text-sm font-semibold text-on-surface">emu8086</span>
                         </div>
-                        <span class="text-[10px] text-outline uppercase font-bold tracking-wider font-label-mono">Próx</span>
+                        <span class="material-symbols-outlined text-xs text-on-surface-variant">arrow_forward_ios</span>
                     </div>
 
                     <!-- Tutorial 2 (Arduino) -->
-                    <div onclick="triggerBranchTransition('node-7')" class="branch-node glass-card rounded-full px-5 py-3 flex items-center justify-between gap-3 cursor-pointer border-dashed border-outline-variant hover:border-secondary/50 transition-all duration-300 w-52" data-id="node-7" id="btn-node-7">
+                    <div onclick="triggerBranchTransition('node-7')" class="branch-node glass-card rounded-full px-5 py-3 flex items-center justify-between gap-3 cursor-pointer border border-white/10 hover:border-secondary/50 transition-all duration-300 w-52" data-id="node-7" id="btn-node-7">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_8px_#00d2d3]"></span>
                             <span class="font-headline-lg-mobile text-sm font-semibold text-on-surface">Arduino</span>
                         </div>
-                        <span class="text-[10px] text-outline uppercase font-bold tracking-wider font-label-mono">Próx</span>
+                        <span class="material-symbols-outlined text-xs text-on-surface-variant">arrow_forward_ios</span>
                     </div>
 
-                    <!-- Sims (Playground) -->
-                    <div onclick="triggerBranchTransition('node-8')" class="branch-node glass-card rounded-full px-5 py-3 flex items-center justify-between gap-3 cursor-pointer border border-white/10 hover:border-primary/50 transition-all duration-300 w-52" data-id="node-8" id="btn-node-8">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-sm text-secondary">memory</span>
-                            <span class="font-headline-lg-mobile text-sm font-semibold text-on-surface">Simuladores</span>
-                        </div>
-                        <span class="material-symbols-outlined text-xs text-on-surface-variant">play_arrow</span>
-                    </div>
 
                     <!-- Sub-Unidad III Detalles -->
                     <div class="branch-node glass-card rounded-full px-3 py-1.5 flex items-center justify-between gap-2 border border-white/5 opacity-60 hover:opacity-100 transition-all duration-300 w-40 text-xs pointer-events-none" data-id="node-3-sub" data-parent="node-3" id="btn-node-3-sub">
@@ -1028,139 +1020,7 @@ END                  ; Fin de Archivo</code></pre>
                 </div>
             </div>
 
-            <!-- Panel Simuladores (Playground) -->
-            <div id="panel-node-8" class="content-panel">
-                <div class="panel-header">
-                    <button onclick="closePanel('node-8')" class="btn-back px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-primary transition-all">&larr; Volver al Tronco</button>
-                    <h2 class="text-xl font-bold font-display-lg ml-4">Simuladores (Esquema Ilustrativo)</h2>
-                </div>
-                <div class="panel-body">
-                    <!-- Simulator emu8086 -->
-                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-lg font-bold text-primary">1. Ilustración del Entorno emu8086</h3>
-                            <span class="bg-primary/10 border border-primary/20 text-primary text-[10px] px-2 py-0.5 rounded-full uppercase font-bold tracking-wider font-label-mono">Vista de Boceto</span>
-                        </div>
-                        <p class="text-xs text-on-surface-variant mb-6">Ejemplo visual de cómo se estructura un programa ensamblador ix86 y su interacción con los registros internos de la CPU (Acumulador, Base, Contador e Índice de Instrucción).</p>
-                        <div class="simulator-wrapper">
-                            <!-- Left: Editor mockup -->
-                            <div class="sim-editor-column">
-                                <div class="editor-block mockup-editor">
-                                    <div class="editor-header flex justify-between items-center px-4 py-2">
-                                        <span>Editor Ensamblador 8086 - suma.asm</span>
-                                        <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
-                                    </div>
-                                    <div class="code-area-wrap p-4 bg-black/40 font-mono text-sm leading-relaxed overflow-y-auto" style="height: 220px;">
-                                        <div class="text-white/40"><span class="text-indigo-400">MOV</span> AX, 0005h  <span class="text-white/30">; Cargar 5 en AX</span></div>
-                                        <div class="text-white/40"><span class="text-indigo-400">MOV</span> BX, 000Ah  <span class="text-white/30">; Cargar 10 en BX</span></div>
-                                        <div class="text-white bg-indigo-500/20 px-2 rounded -mx-2"><span class="text-indigo-400 font-bold">ADD</span> AX, BX     <span class="text-white/40 font-normal">; Sumar BX a AX (AX = 15)</span></div>
-                                        <div class="text-white/40"><span class="text-indigo-400">HLT</span>            <span class="text-white/30">; Terminar ejecución</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Right: Registers mockup -->
-                            <div class="sim-cpu-column">
-                                <h5>Registros Internos de la CPU</h5>
-                                <div class="registers-grid">
-                                    <div class="register-box">
-                                        <span class="reg-lbl">AX (Acumulador)</span>
-                                        <span class="reg-val text-indigo-300">000Fh</span>
-                                    </div>
-                                    <div class="register-box">
-                                        <span class="reg-lbl">BX (Base)</span>
-                                        <span class="reg-val">000Ah</span>
-                                    </div>
-                                    <div class="register-box">
-                                        <span class="reg-lbl">CX (Contador)</span>
-                                        <span class="reg-val">0000h</span>
-                                    </div>
-                                    <div class="register-box">
-                                        <span class="reg-lbl">DX (Datos)</span>
-                                        <span class="reg-val">0000h</span>
-                                    </div>
-                                    <div class="register-box highlight-reg bg-indigo-500/5 border-indigo-500/30">
-                                        <span class="reg-lbl">IP (Puntero Instrucción)</span>
-                                        <span class="reg-val text-indigo-400">0106h</span>
-                                    </div>
-                                    <div class="register-box">
-                                        <span class="reg-lbl">Flags</span>
-                                        <span class="reg-val text-white/50">ZF:0 SF:0</span>
-                                    </div>
-                                </div>
-                                <div class="console-box mt-3 bg-black/40">
-                                    <h6>Consola de Compilación / Trazado</h6>
-                                    <pre class="console-output text-xs text-indigo-300/80 font-mono mt-1">Cargando programa "suma.asm"
-Emulando ciclo de reloj en paso de depuración...
-ADD AX, BX ejecutado. Estado del acumulador actualizado.</pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Simulator Arduino -->
-                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-lg font-bold text-primary">2. Ilustración de Esquema Arduino Uno</h3>
-                            <span class="bg-primary/10 border border-primary/20 text-primary text-[10px] px-2 py-0.5 rounded-full uppercase font-bold tracking-wider font-label-mono">Vista de Boceto</span>
-                        </div>
-                        <p class="text-xs text-on-surface-variant mb-6">Representación ilustrativa de la placa Arduino Uno ejecutando el programa de parpadeo (Blink). Muestra la conexión de pines digitales y la carga del firmware en el ATmega328P.</p>
-                        <div class="simulator-wrapper">
-                            <!-- Left: Code mockup -->
-                            <div class="sim-editor-column">
-                                <div class="editor-block mockup-editor">
-                                    <div class="editor-header flex justify-between items-center px-4 py-2">
-                                        <span>Arduino Sketch - blink.ino</span>
-                                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
-                                    </div>
-                                    <pre class="p-4 bg-black/40 font-mono text-xs text-cyan-300/80 leading-relaxed overflow-y-auto select-none" style="height: 220px;"><code><span class="text-cyan-500">void</span> setup() {
-  pinMode(13, OUTPUT); <span class="text-white/30">// Pin 13 como salida</span>
-}
-
-<span class="text-cyan-500">void</span> loop() {
-  digitalWrite(13, HIGH); <span class="text-white/30">// Encender LED</span>
-  delay(1000);            <span class="text-white/30">// Esperar</span>
-  digitalWrite(13, LOW);  <span class="text-white/30">// Apagar LED</span>
-  delay(1000);
-}</code></pre>
-                                </div>
-                            </div>
-                            <!-- Right: Board graphic -->
-                            <div class="sim-cpu-column flex items-center justify-center bg-black/20 p-6 rounded-xl border border-white/5">
-                                <div class="arduino-board-wrap opacity-90">
-                                    <svg viewBox="0 0 400 300" class="arduino-svg" width="100%" height="auto">
-                                        <rect x="10" y="10" width="380" height="280" rx="10" fill="#0b5e7b" stroke="#063e52" stroke-width="4"/>
-                                        <rect x="230" y="140" width="120" height="40" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
-                                        <text x="290" y="165" fill="#fff" font-size="10" font-family="monospace" text-anchor="middle">ATMEGA328P-PU</text>
-                                        <!-- Pins -->
-                                        <g fill="#999">
-                                            <rect x="235" y="134" width="6" height="6"/><rect x="245" y="134" width="6" height="6"/><rect x="255" y="134" width="6" height="6"/><rect x="265" y="134" width="6" height="6"/><rect x="275" y="134" width="6" height="6"/><rect x="285" y="134" width="6" height="6"/><rect x="295" y="134" width="6" height="6"/><rect x="305" y="134" width="6" height="6"/><rect x="315" y="134" width="6" height="6"/><rect x="325" y="134" width="6" height="6"/><rect x="335" y="134" width="6" height="6"/><rect x="345" y="134" width="6" height="6"/>
-                                            <rect x="235" y="180" width="6" height="6"/><rect x="245" y="180" width="6" height="6"/><rect x="255" y="180" width="6" height="6"/><rect x="265" y="180" width="6" height="6"/><rect x="275" y="180" width="6" height="6"/><rect x="285" y="180" width="6" height="6"/><rect x="295" y="180" width="6" height="6"/><rect x="305" y="180" width="6" height="6"/><rect x="315" y="180" width="6" height="6"/><rect x="325" y="180" width="6" height="6"/><rect x="335" y="180" width="6" height="6"/><rect x="345" y="180" width="6" height="6"/>
-                                        </g>
-                                        <rect x="0" y="40" width="60" height="50" rx="3" fill="#ccc" stroke="#999"/>
-                                        <rect x="15" y="45" width="45" height="40" fill="#444"/>
-                                        <text x="35" y="70" fill="#bbb" font-size="8" font-family="monospace" text-anchor="middle">USB</text>
-                                        <rect x="100" y="60" width="20" height="10" rx="4" fill="#aaa" stroke="#777"/>
-                                        <!-- Pin Header (Digital) -->
-                                        <rect x="120" y="15" width="250" height="15" fill="#111"/>
-                                        <text x="360" y="11" fill="#fff" font-size="8" font-family="monospace">AREF 13 12 11 10 9 8 ~ DIGITAL</text>
-                                        
-                                        <!-- PIN 13 LED (L) - Glowing Cyan statically for illustration -->
-                                        <rect x="180" y="45" width="10" height="10" rx="1" fill="#222" stroke="#444"/>
-                                        <circle cx="185" cy="50" r="4" fill="#00d2d3" style="filter: drop-shadow(0 0 6px #00d2d3);"/>
-                                        <text x="172" y="52" fill="#fff" font-size="8" font-family="monospace" font-weight="bold">L</text>
-                                        
-                                        <!-- LED TX/RX -->
-                                        <circle cx="150" cy="90" r="2.5" fill="#ff7597" style="filter: drop-shadow(0 0 4px #ff7597);"/>
-                                        <text x="140" y="93" fill="#aaa" font-size="8" font-family="monospace">TX</text>
-                                        <circle cx="150" cy="105" r="2.5" fill="#333"/>
-                                        <text x="140" y="108" fill="#aaa" font-size="8" font-family="monospace">RX</text>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Panel Cuestionarios (Quiz) removed -->
 

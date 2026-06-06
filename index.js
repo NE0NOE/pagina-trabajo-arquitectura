@@ -52,7 +52,7 @@ function initConstellation() {
         const nodeId = node.getAttribute('data-id');
         
         // Safety fallbacks for sizes if browser has not done layout yet
-        const defaultWidth = (nodeId === 'node-6' || nodeId === 'node-7' || nodeId === 'node-8' ? 224 : 256);
+        const defaultWidth = (nodeId === 'node-6' || nodeId === 'node-7' ? 224 : 256);
         const nodeWidth = node.clientWidth || defaultWidth;
         const nodeHeight = node.clientHeight || 46;
         
@@ -660,16 +660,15 @@ function startArduinoSim() {
 // Dynamic Panel Navigation Footer Injection
 // ----------------------------------------------------
 function injectPanelNavigation() {
-    const totalNodes = 8;
+    const totalNodes = 7;
     const nodeNames = [
         "Unidad I",
         "Unidad II",
         "Unidad III",
         "Unidad IV",
         "Unidad V",
-        "emu8086 (Próx)",
-        "Arduino (Próx)",
-        "Simuladores"
+        "emu8086",
+        "Arduino"
     ];
 
     for (let i = 1; i <= totalNodes; i++) {
