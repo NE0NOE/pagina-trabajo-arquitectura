@@ -439,11 +439,35 @@ body.light-theme .console-box h6 {
     text-align: center;
     background-color: rgba(255,255,255,0.02);
     border: 2px solid rgba(255,255,255,0.08);
+    transition: all 0.30s ease;
 }
 .cpu-box { border-color: var(--primary); }
 .mem-box { border-color: var(--secondary); }
-.vn-sub { font-size: 0.75rem; background-color: rgba(0,0,0,0.4); padding: 0.3rem; border-radius: 4px; margin-bottom: 0.4rem; }
-.mem-slot { font-size: 0.75rem; padding: 0.4rem; border-radius: 4px; margin-bottom: 0.4rem; border: 1px solid rgba(255,255,255,0.05); }
+.vn-sub { font-size: 0.75rem; background-color: rgba(0,0,0,0.4); padding: 0.3rem; border-radius: 4px; margin-bottom: 0.4rem; transition: all 0.30s ease; }
+.mem-slot { font-size: 0.75rem; padding: 0.4rem; border-radius: 4px; margin-bottom: 0.4rem; border: 1px solid rgba(255,255,255,0.05); transition: all 0.30s ease; }
+
+/* Active Glow Styles for Simulation Components */
+.glow-active-cyan {
+    background-color: rgba(0, 210, 211, 0.25) !important;
+    border-color: #00d2d3 !important;
+    box-shadow: 0 0 20px rgba(0, 210, 211, 0.5) !important;
+    transform: scale(1.03);
+    color: #ffffff !important;
+}
+.glow-active-pink {
+    background-color: rgba(255, 117, 151, 0.25) !important;
+    border-color: #ff7597 !important;
+    box-shadow: 0 0 20px rgba(255, 117, 151, 0.5) !important;
+    transform: scale(1.03);
+    color: #ffffff !important;
+}
+.glow-active-yellow {
+    background-color: rgba(255, 159, 67, 0.25) !important;
+    border-color: #ff9f43 !important;
+    box-shadow: 0 0 20px rgba(255, 159, 67, 0.5) !important;
+    transform: scale(1.03);
+    color: #ffffff !important;
+}
 .code-slot { background-color: rgba(79, 70, 229, 0.08); border-color: rgba(79, 70, 229, 0.3); color: var(--primary); }
 .data-slot { background-color: rgba(195, 192, 255, 0.08); border-color: rgba(195, 192, 255, 0.3); color: var(--secondary); }
 

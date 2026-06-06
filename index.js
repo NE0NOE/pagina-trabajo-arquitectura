@@ -14,7 +14,8 @@ function initConstellation() {
     const isDesktop = window.innerWidth >= 768;
     const container = document.getElementById('constellationArea');
     const trunk = document.getElementById('trunkNode');
-    const nodes = Array.from(document.querySelectorAll('.branch-node'));
+    const nodes = Array.from(document.querySelectorAll('.branch-node:not([data-id$="-sub"])'));
+    const subNodes = Array.from(document.querySelectorAll('.branch-node[data-id$="-sub"]'));
     const svg = document.getElementById('svgConnections');
     
     if (!container || !trunk || !svg) return;
@@ -24,7 +25,7 @@ function initConstellation() {
 
     if (!isDesktop) {
         // Reset styles for mobile stack
-        nodes.forEach(node => {
+        nodes.concat(subNodes).forEach(node => {
             node.style.left = '';
             node.style.top = '';
         });
@@ -46,12 +47,12 @@ function initConstellation() {
     trunk.style.left = `${centerX - (trunkWidth/2)}px`;
     trunk.style.top = `${centerY - (trunkHeight/2)}px`;
 
-    // 1. Calculate and store coordinates for all nodes
+    // 1. Calculate and store coordinates for all main nodes
     const nodeCoords = nodes.map((node, index) => {
         const nodeId = node.getAttribute('data-id');
         
         // Safety fallbacks for sizes if browser has not done layout yet
-        const defaultWidth = (nodeId === 'node-6' || nodeId === 'node-7' || nodeId === 'node-8' || nodeId === 'node-9' ? 224 : 256);
+        const defaultWidth = (nodeId === 'node-6' || nodeId === 'node-7' || nodeId === 'node-8' ? 224 : 256);
         const nodeWidth = node.clientWidth || defaultWidth;
         const nodeHeight = node.clientHeight || 46;
         
@@ -67,7 +68,35 @@ function initConstellation() {
         return { id: nodeId, x: nodeX, y: nodeY, element: node, index };
     });
 
-    // 2. Draw radial lines from center to each node
+    // 1.5. Calculate and store coordinates for sub-nodes relative to parents
+    const subNodeCoords = subNodes.map(subNode => {
+        const subId = subNode.getAttribute('data-id');
+        const parentId = subNode.getAttribute('data-parent');
+        const parentCoord = nodeCoords.find(nc => nc.id === parentId);
+        
+        if (!parentCoord) return null;
+        
+        // Vector from trunk (center) to parent node
+        const vx = parentCoord.x - centerX;
+        const vy = parentCoord.y - centerY;
+        const dist = Math.sqrt(vx * vx + vy * vy);
+        const ux = vx / dist;
+        const uy = vy / dist;
+        
+        // Position subnode further out and slightly offset tangentially
+        const subX = parentCoord.x + ux * 90 - uy * 45;
+        const subY = parentCoord.y + uy * 90 + ux * 45;
+        
+        const subWidth = subNode.clientWidth || 160;
+        const subHeight = subNode.clientHeight || 36;
+        
+        subNode.style.left = `${subX - (subWidth / 2)}px`;
+        subNode.style.top = `${subY - (subHeight / 2)}px`;
+        
+        return { id: subId, x: subX, y: subY, element: subNode, parentId, parentX: parentCoord.x, parentY: parentCoord.y };
+    }).filter(Boolean);
+
+    // 2. Draw radial lines from center to each main node
     nodeCoords.forEach(nc => {
         const startX = centerX;
         const startY = centerY;
@@ -113,7 +142,52 @@ function initConstellation() {
         nc.element._leaveHandler = mouseLeaveHandler;
     });
 
-    // 3. Draw outer ring paths connecting adjacent nodes in a circle
+    // 2.5 Draw sub-node lines from parent to sub-node
+    subNodeCoords.forEach((snc, idx) => {
+        const startX = snc.parentX;
+        const startY = snc.parentY;
+        const endX = snc.x;
+        const endY = snc.y;
+        
+        // Curve bending slightly
+        const cpX = (startX + endX) / 2 - (startY - endY) * 0.2;
+        const cpY = (startY + endY) / 2 + (startX - endX) * 0.2;
+        
+        const d = `M ${startX} ${startY} Q ${cpX} ${cpY} ${endX} ${endY}`;
+        const dReverse = `M ${endX} ${endY} Q ${cpX} ${cpY} ${startX} ${startY}`;
+        
+        // Base connection line
+        const pathLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathLine.setAttribute('d', d);
+        pathLine.setAttribute('class', `path-line path-sub-${idx}`);
+        svg.appendChild(pathLine);
+        
+        // Forward pulse (Parent -> Sub)
+        const pathPulse = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathPulse.setAttribute('d', d);
+        pathPulse.setAttribute('class', `path-pulse pulse-sub-${idx}`);
+        svg.appendChild(pathPulse);
+        
+        // Backward pulse (Sub -> Parent)
+        const pathPulseReverse = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathPulseReverse.setAttribute('d', dReverse);
+        pathPulseReverse.setAttribute('class', `path-pulse pulse-sub-${idx}-rev`);
+        svg.appendChild(pathPulseReverse);
+        
+        const forwardKey = `${snc.parentId}->${snc.id}`;
+        const backwardKey = `${snc.id}->${snc.parentId}`;
+        
+        pulsePathsMap[forwardKey] = pathPulse;
+        pulsePathsMap[backwardKey] = pathPulseReverse;
+        linePathsMap[forwardKey] = pathLine;
+        linePathsMap[backwardKey] = pathLine;
+        
+        // Also map standard nodeId for direct navigation if any
+        pulsePathsMap[snc.id] = pathPulse;
+        linePathsMap[snc.id] = pathLine;
+    });
+
+    // 3. Draw outer ring paths connecting adjacent main nodes in a circle
     for (let i = 0; i < nodeCoords.length; i++) {
         const current = nodeCoords[i];
         const next = nodeCoords[(i + 1) % nodeCoords.length];
@@ -300,8 +374,34 @@ function animateBus2(busId) {
         void busElement.offsetWidth; // Trigger reflow
         busElement.classList.add('pulse');
         
+        // Define target elements and glow class based on bus type
+        let targets = [];
+        let glowClass = "";
+        
+        if (busId === 'address-2') {
+            targets = ['cpu-uc', 'mem-unified', 'mem-code'];
+            glowClass = 'glow-active-cyan';
+        } else if (busId === 'data-2') {
+            targets = ['cpu-reg', 'cpu-alu', 'mem-unified', 'mem-data'];
+            glowClass = 'glow-active-pink';
+        } else if (busId === 'control-2') {
+            targets = ['cpu-uc', 'cpu-alu', 'mem-unified', 'mem-code', 'mem-data'];
+            glowClass = 'glow-active-yellow';
+        }
+        
+        // Apply glow classes
+        targets.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add(glowClass);
+        });
+        
         setTimeout(() => {
             busElement.classList.remove('pulse');
+            // Remove glow classes
+            targets.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove(glowClass);
+            });
         }, 1200);
     }
 }
@@ -557,336 +657,10 @@ function startArduinoSim() {
 }
 
 // ----------------------------------------------------
-// Quiz System Logic (Autoevaluación)
-// ----------------------------------------------------
-const quizData = {
-    "1": [
-        {
-            q: "¿Cuál es la principal diferencia entre la Arquitectura y la Organización de computadoras?",
-            o: [
-                "La arquitectura se refiere a los atributos visibles al programador (como el ISA), mientras que la organización detalla las interconexiones operativas físicas transparentes para él.",
-                "La arquitectura describe el chasis de la computadora y la organización describe el sistema operativo instalado.",
-                "No hay diferencia física ni conceptual; ambos términos representan la misma estructura de la placa base.",
-                "La arquitectura trata sobre el consumo eléctrico del procesador y la organización sobre la distribución de las memorias SSD."
-            ],
-            a: 0,
-            e: "La arquitectura representa el diseño abstracto y conjunto de instrucciones legibles para programar (ISA), mientras que la organización realiza ese diseño implementando compuertas y hardware específico."
-        },
-        {
-            q: "¿Cuáles son las cuatro funciones básicas que ejecuta una computadora?",
-            o: [
-                "Entrada, Salida, Copiado y Borrado de datos.",
-                "Procesamiento, Almacenamiento, Transferencia y Control de datos.",
-                "Compilación, Enlazado, Simulación y Ejecución de programas.",
-                "Suma, Resta, Multiplicación y División aritmética."
-            ],
-            a: 1,
-            e: "Cualquier computadora procesa datos, los almacena (RAM/Disco), los mueve de un lugar a otro (transferencia) y supervisa todo mediante la unidad de control."
-        },
-        {
-            q: "Si necesitas diseñar un termostato inteligente compacto de bajo costo, ¿qué componente elegirías?",
-            o: [
-                "Un microprocesador de alto rendimiento como un Intel Core i5.",
-                "Un módulo de interrupciones 8259 acoplado a un disco duro externo.",
-                "Un microcontrolador (μC) ya que integra CPU, memoria RAM/Flash y puertos E/S en un solo chip económico.",
-                "Una memoria de segmentación de la familia ix86."
-            ],
-            a: 2,
-            e: "Los microcontroladores integran todos los recursos mínimos en un único integrado y consumen muy poca potencia, ideal para sistemas embebidos específicos como termostatos."
-        }
-    ],
-    "2": [
-        {
-            q: "¿Qué cuello de botella presenta la Arquitectura Von Neumann?",
-            o: [
-                "Las instrucciones y los datos comparten el mismo bus de datos y memoria, impidiendo que la CPU acceda a ambos de forma simultánea.",
-                "No soporta operaciones lógicas complejas en la ALU.",
-                "Depende obligatoriamente del uso de un coprocesador matemático externo.",
-                "Tiene una capacidad limitada de direccionamiento de 8 bits."
-            ],
-            a: 0,
-            e: "El cuello de botella de Von Neumann se produce porque las instrucciones y los datos viajan por el mismo bus hacia la misma memoria. El procesador debe alternar entre leer el código y leer la memoria de datos."
-        },
-        {
-            q: "¿Qué tipo de bus es unidireccional y se encarga de seleccionar el periférico o celda de memoria a leer/escribir?",
-            o: [
-                "El Bus de Datos.",
-                "El Bus de Control.",
-                "El Bus de Direcciones.",
-                "El Bus de Interrupciones."
-            ],
-            a: 2,
-            e: "El Bus de Direcciones es unidireccional (generado por la CPU) e indica la dirección de destino física sobre la cual operar."
-        },
-        {
-            q: "El chip 8255 (PPI) sirve para:",
-            o: [
-                "Proporcionar una interfaz paralela programable para periféricos externos.",
-                "Regular la frecuencia de oscilación del cristal de cuarzo de la CPU.",
-                "Controlar las solicitudes de interrupción prioritarias enviadas a la CPU.",
-                "Proporcionar una memoria ROM no volátil de alta velocidad."
-            ],
-            a: 0,
-            e: "El Intel 8255 (PPI) es un chip periférico diseñado para dotar al procesador de puertos paralelos bidireccionales y configurables para Entrada/Salida."
-        }
-    ],
-    "3": [
-        {
-            q: "¿Cuál es el propósito del registro de segmento CS en el procesador Intel 8086?",
-            o: [
-                "Contener el operando para multiplicaciones avanzadas.",
-                "Apoyar el direccionamiento del segmento donde se almacena el código del programa (Code Segment).",
-                "Guardar temporalmente la dirección de la pila de datos (Stack Segment).",
-                "Guardar las banderas de desbordamiento aritmético."
-            ],
-            a: 1,
-            e: "El registro CS (Code Segment) apunta al segmento actual de la memoria que contiene las instrucciones del programa que la CPU ejecuta."
-        },
-        {
-            q: "En el ensamblador ix86, ¿qué diferencia hay entre un Procedimiento (PROC) y una Macro (MACRO)?",
-            o: [
-                "No hay diferencia; ambos ejecutan llamadas de interrupción del BIOS.",
-                "La macro se expande textualmente reemplazando su nombre en cada llamada durante la compilación, mientras que el procedimiento se compila una sola vez y se invoca mediante CALL y RET.",
-                "El procedimiento consume más memoria física en el archivo compilado final que la macro.",
-                "Las macros se guardan en la memoria RAM externa y los procedimientos en los registros de la CPU."
-            ],
-            a: 1,
-            e: "Los procedimientos ahorran espacio de código ya que residen en una sola dirección de memoria física. Las macros ahorran sobrecarga de pila (CALL/RET) al copiar el código directamente donde se necesita."
-        },
-        {
-            q: "¿Qué modo de direccionamiento utiliza la instrucción: MOV AX, [BX] ?",
-            o: [
-                "Direccionamiento Inmediato.",
-                "Direccionamiento Registro.",
-                "Direccionamiento Indirecto por Registro.",
-                "Direccionamiento Directo de Memoria."
-            ],
-            a: 2,
-            e: "Como el registro BX se encuentra entre corchetes, indica que la dirección de memoria efectiva donde está el dato se encuentra almacenada dentro de BX."
-        }
-    ],
-    "4": [
-        {
-            q: "¿Qué ventaja principal ofrece la Arquitectura Harvard en microcontroladores?",
-            o: [
-                "Tiene buses y memorias físicas separadas para código y datos, lo que permite accesos simultáneos y ejecuciones más rápidas.",
-                "Reduce los costos de fabricación al unificar los chips de memoria en un solo bloque.",
-                "Es inmune a las interrupciones de hardware del 8259.",
-                "Permite programar en ensamblador de la familia ix86 nativamente."
-            ],
-            a: 0,
-            e: "Al separar físicamente las instrucciones y los datos, el procesador puede buscar la siguiente instrucción en la memoria de código mientras lee o escribe una variable en la RAM de datos, logrando un rendimiento superior."
-        },
-        {
-            q: "¿Qué diferencia principal existe entre procesadores con filosofía RISC y CISC?",
-            o: [
-                "CISC utiliza únicamente instrucciones lógicas AND y OR.",
-                "RISC utiliza un repertorio simplificado de instrucciones sencillas que típicamente se ejecutan en un único ciclo de reloj, mientras que CISC dispone de instrucciones complejas multiciclo.",
-                "RISC requiere una gran cantidad de memoria caché de programa externa.",
-                "CISC fue diseñado para microcontroladores económicos e inalámbricos."
-            ],
-            a: 1,
-            e: "RISC apuesta por la simplicidad de hardware, logrando altas velocidades con instrucciones básicas de un ciclo, mientras que CISC incluye hardware decodificador complejo para resolver tareas sofisticadas en menos líneas de código."
-        },
-        {
-            q: "¿Qué caracteriza a un microcontrolador embebido?",
-            o: [
-                "Requiere tarjetas de red externas para comunicarse con sensores.",
-                "Integra todos los recursos operativos (CPU, RAM, ROM, I/O) dentro del chip y no tiene buses externos expuestos.",
-                "Trabaja exclusivamente sumergido en líquidos refrigerantes industriales.",
-                "Solo puede ser programado una vez en la vida útil del chip."
-            ],
-            a: 1,
-            e: "Un microcontrolador embebido tiene todos los elementos indispensables alojados dentro del mismo silicio, evitando buses direccionables exteriores para liberar pines como GPIOs."
-        }
-    ],
-    "5": [
-        {
-            q: "¿A qué grupo de instrucciones pertenecen nemónicos como BTFSC o JMP?",
-            o: [
-                "Instrucciones de Transferencia de datos.",
-                "Instrucciones de Aritmética y Lógica.",
-                "Instrucciones de Control de Flujo de programa.",
-                "Instrucciones Aritméticas de Pila."
-            ],
-            a: 2,
-            e: "Tanto JMP (salto incondicional) como BTFSC (bifurcación condicional en base a un bit) alteran el flujo lineal del puntero de instrucciones."
-        },
-        {
-            q: "¿Qué representa una Directiva en el desarrollo de software en ensamblador?",
-            o: [
-                "Una instrucción binaria directa enviada a la ALU para sumar datos.",
-                "Un comando que da instrucciones al compilador durante el proceso de ensamblado y no genera código ejecutable para el microcontrolador.",
-                "Un controlador de periféricos de Entrada y Salida analógica.",
-                "Una llamada a las funciones del BIOS de la computadora."
-            ],
-            a: 1,
-            e: "Las directivas (como ORG, EQU, END) son comandos que configuran y guían al compilador, pero no se traducen en código binario de máquina ejecutable por el silicio."
-        },
-        {
-            q: "¿Qué combinación de herramientas de software se usa comúnmente en la industria para depurar circuitos con microcontroladores sin hardware físico?",
-            o: [
-                "emu8086 y Arduino IDE.",
-                "MPLAB X (para escritura/compilación) y PROTEUS (para simulación esquemática del circuito).",
-                "Visual Studio Code e Intel Quartus.",
-                "C++ Compiler y Microsoft Excel."
-            ],
-            a: 1,
-            e: "MPLAB compila el código generando el archivo binario (.hex), el cual se carga virtualmente dentro del chip simulado en PROTEUS para visualizar el circuito en pantalla."
-        }
-    ]
-};
-
-let currentQuizUnit = "1";
-let currentQuizQIdx = 0;
-let quizScore = 0;
-let userSelectedOption = null;
-
-function loadQuiz() {
-    const select = document.getElementById('quiz-unit-select');
-    currentQuizUnit = select.value;
-    currentQuizQIdx = 0;
-    quizScore = 0;
-    userSelectedOption = null;
-    
-    document.getElementById('quiz-results').classList.add('d-none');
-    document.getElementById('quiz-box').classList.remove('d-none');
-    
-    showQuizQuestion();
-}
-
-function showQuizQuestion() {
-    userSelectedOption = null;
-    
-    document.getElementById('quiz-btn-submit').classList.remove('d-none');
-    document.getElementById('quiz-btn-next').classList.add('d-none');
-    
-    const unitQuestions = quizData[currentQuizUnit];
-    const qData = unitQuestions[currentQuizQIdx];
-    
-    document.getElementById('quiz-question-number').textContent = `Pregunta ${currentQuizQIdx + 1} de ${unitQuestions.length}`;
-    document.getElementById('quiz-question-text').textContent = qData.q;
-    
-    const optionsWrap = document.getElementById('quiz-options');
-    optionsWrap.innerHTML = "";
-    
-    const optionLetters = ["A", "B", "C", "D"];
-    qData.o.forEach((optText, idx) => {
-        const optDiv = document.createElement('div');
-        optDiv.className = "quiz-option";
-        optDiv.setAttribute('data-idx', idx);
-        
-        optDiv.innerHTML = `
-            <div class="opt-indicator">${optionLetters[idx]}</div>
-            <div class="opt-text">${escapeHTML(optText)}</div>
-        `;
-        
-        optDiv.addEventListener('click', () => selectQuizOption(idx));
-        optionsWrap.appendChild(optDiv);
-    });
-}
-
-function selectQuizOption(idx) {
-    if (document.getElementById('quiz-btn-submit').classList.contains('d-none')) {
-        return;
-    }
-    
-    userSelectedOption = idx;
-    
-    const options = document.querySelectorAll('#quiz-options .quiz-option');
-    options.forEach(opt => {
-        opt.classList.remove('selected');
-        if (parseInt(opt.getAttribute('data-idx')) === idx) {
-            opt.classList.add('selected');
-        }
-    });
-}
-
-function submitQuizAnswer() {
-    if (userSelectedOption === null) {
-        alert("Por favor, selecciona una opción antes de enviar.");
-        return;
-    }
-    
-    const unitQuestions = quizData[currentQuizUnit];
-    const qData = unitQuestions[currentQuizQIdx];
-    const correctIdx = qData.a;
-    
-    const options = document.querySelectorAll('#quiz-options .quiz-option');
-    options.forEach(opt => {
-        const optIdx = parseInt(opt.getAttribute('data-idx'));
-        opt.classList.remove('selected');
-        
-        if (optIdx === correctIdx) {
-            opt.classList.add('correct');
-        } else if (optIdx === userSelectedOption) {
-            opt.classList.add('incorrect');
-        }
-    });
-    
-    if (userSelectedOption === correctIdx) {
-        quizScore++;
-    }
-    
-    document.getElementById('quiz-btn-submit').classList.add('d-none');
-    document.getElementById('quiz-btn-next').classList.remove('d-none');
-    
-    const explanationDiv = document.createElement('div');
-    explanationDiv.className = "bg-black/30 p-3 rounded-lg border border-white/5 text-xs text-on-surface-variant/90 mt-3";
-    explanationDiv.innerHTML = `<strong>Explicación:</strong> ${escapeHTML(qData.e)}`;
-    document.getElementById('quiz-options').appendChild(explanationDiv);
-}
-
-function nextQuizQuestion() {
-    const unitQuestions = quizData[currentQuizUnit];
-    currentQuizQIdx++;
-    
-    if (currentQuizQIdx >= unitQuestions.length) {
-        showQuizResults();
-    } else {
-        showQuizQuestion();
-    }
-}
-
-function showQuizResults() {
-    document.getElementById('quiz-box').classList.add('d-none');
-    
-    const resultsCard = document.getElementById('quiz-results');
-    resultsCard.classList.remove('d-none');
-    
-    const totalQ = quizData[currentQuizUnit].length;
-    document.getElementById('quiz-score-val').textContent = `${quizScore} / ${totalQ}`;
-    
-    let feedback = "";
-    if (quizScore === totalQ) {
-        feedback = "¡Perfecto! Has dominado por completo todos los conceptos de esta unidad. ¡Sigue así!";
-    } else if (quizScore >= totalQ / 2) {
-        feedback = "¡Buen trabajo! Has aprobado la evaluación, pero te recomendamos repasar las explicaciones de las preguntas fallidas.";
-    } else {
-        feedback = "Te sugerimos volver a leer el contenido de la unidad y reintentar el cuestionario para afianzar tus bases.";
-    }
-    document.getElementById('quiz-result-feedback').textContent = feedback;
-}
-
-function restartQuiz() {
-    loadQuiz();
-}
-
-// Helper to escape HTML characters
-function escapeHTML(str) {
-    return str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-// ----------------------------------------------------
 // Dynamic Panel Navigation Footer Injection
 // ----------------------------------------------------
 function injectPanelNavigation() {
-    const totalNodes = 9;
+    const totalNodes = 8;
     const nodeNames = [
         "Unidad I",
         "Unidad II",
@@ -895,8 +669,7 @@ function injectPanelNavigation() {
         "Unidad V",
         "emu8086 (Próx)",
         "Arduino (Próx)",
-        "Simuladores",
-        "Cuestionarios"
+        "Simuladores"
     ];
 
     for (let i = 1; i <= totalNodes; i++) {
@@ -939,9 +712,6 @@ function injectPanelNavigation() {
 // App Initialization
 // ----------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    // Load initial quiz
-    loadQuiz();
-    
     // Inject bottom panel navigation buttons dynamically
     injectPanelNavigation();
 });

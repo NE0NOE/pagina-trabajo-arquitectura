@@ -266,13 +266,31 @@
                         <span class="material-symbols-outlined text-xs text-on-surface-variant">play_arrow</span>
                     </div>
 
-                    <!-- Quizzes -->
-                    <div onclick="triggerBranchTransition('node-9')" class="branch-node glass-card rounded-full px-5 py-3 flex items-center justify-between gap-3 cursor-pointer border border-white/10 hover:border-primary/50 transition-all duration-300 w-52" data-id="node-9" id="btn-node-9">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-sm text-secondary">quiz</span>
-                            <span class="font-headline-lg-mobile text-sm font-semibold text-on-surface">Cuestionarios</span>
+                    <!-- Sub-Unidad III Detalles -->
+                    <div class="branch-node glass-card rounded-full px-3 py-1.5 flex items-center justify-between gap-2 border border-white/5 opacity-60 hover:opacity-100 transition-all duration-300 w-40 text-xs pointer-events-none" data-id="node-3-sub" data-parent="node-3" id="btn-node-3-sub">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_6px_#4f46e5]"></span>
+                            <span class="font-headline-lg-mobile text-[11px] font-semibold text-primary">Detalles U-III</span>
                         </div>
-                        <span class="material-symbols-outlined text-xs text-on-surface-variant">fact_check</span>
+                        <span class="material-symbols-outlined text-[10px] text-on-surface-variant">lock</span>
+                    </div>
+
+                    <!-- Sub-Unidad IV Detalles -->
+                    <div class="branch-node glass-card rounded-full px-3 py-1.5 flex items-center justify-between gap-2 border border-white/5 opacity-60 hover:opacity-100 transition-all duration-300 w-40 text-xs pointer-events-none" data-id="node-4-sub" data-parent="node-4" id="btn-node-4-sub">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_6px_#4f46e5]"></span>
+                            <span class="font-headline-lg-mobile text-[11px] font-semibold text-primary">Detalles U-IV</span>
+                        </div>
+                        <span class="material-symbols-outlined text-[10px] text-on-surface-variant">lock</span>
+                    </div>
+
+                    <!-- Sub-Unidad V Detalles -->
+                    <div class="branch-node glass-card rounded-full px-3 py-1.5 flex items-center justify-between gap-2 border border-white/5 opacity-60 hover:opacity-100 transition-all duration-300 w-40 text-xs pointer-events-none" data-id="node-5-sub" data-parent="node-5" id="btn-node-5-sub">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_6px_#4f46e5]"></span>
+                            <span class="font-headline-lg-mobile text-[11px] font-semibold text-primary">Detalles U-V</span>
+                        </div>
+                        <span class="material-symbols-outlined text-[10px] text-on-surface-variant">lock</span>
                     </div>
                 </div>
 
@@ -356,19 +374,19 @@
                             <div class="vn-diagram-block">
                                 <div class="vn-component cpu-box">
                                     <h4 class="font-bold">CPU</h4>
-                                    <div class="vn-sub">Unidad de Control</div>
-                                    <div class="vn-sub">ALU</div>
-                                    <div class="vn-sub">Registros</div>
+                                    <div class="vn-sub" id="cpu-uc">Unidad de Control</div>
+                                    <div class="vn-sub" id="cpu-alu">ALU</div>
+                                    <div class="vn-sub" id="cpu-reg">Registros</div>
                                 </div>
                                 <div class="vn-buses">
                                     <div class="bus-line text-cyan" id="bus-address-2">Bus de Direcciones &rarr;</div>
                                     <div class="bus-line text-pink" id="bus-data-2">&larr; Bus de Datos &rarr;</div>
                                     <div class="bus-line text-yellow" id="bus-control-2">&larr; Bus de Control &rarr;</div>
                                 </div>
-                                <div class="vn-component mem-box">
+                                <div class="vn-component mem-box" id="mem-unified">
                                     <h4 class="font-bold">Memoria Unificada</h4>
-                                    <div class="mem-slot code-slot">Instrucciones de Código</div>
-                                    <div class="mem-slot data-slot">Variables de Datos</div>
+                                    <div class="mem-slot code-slot" id="mem-code">Instrucciones de Código</div>
+                                    <div class="mem-slot data-slot" id="mem-data">Variables de Datos</div>
                                 </div>
                             </div>
                             <div class="vn-controls">
@@ -420,6 +438,16 @@
                             </table>
                         </div>
                     </div>
+                    <!-- Tertiary Sub-branch Link -->
+                    <div class="flex justify-center my-8">
+                        <div onclick="triggerBranchTransition('node-3-sub', 'node-3')" class="glass-card rounded-full px-5 py-3 flex items-center justify-between gap-3 cursor-pointer border border-white/10 hover:border-primary/50 transition-all duration-300 w-64 text-center">
+                            <div class="flex items-center gap-2 mx-auto">
+                                <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-[0_0_8px_#4f46e5]"></span>
+                                <span class="font-headline-lg-mobile text-sm font-semibold text-primary">Detalles U-III (Modos e Instrucciones)</span>
+                                <span class="material-symbols-outlined text-xs text-on-surface-variant">arrow_forward_ios</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -448,6 +476,74 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-4">2. Filosofías de Juego de Instrucciones: CISC vs RISC</h3>
+                        <p class="text-on-surface-variant mb-4">Los procesadores y microcontroladores se estructuran bajo dos filosofías fundamentales:</p>
+                        <div class="registers-table-wrap">
+                            <table class="data-table small-text">
+                                <thead>
+                                    <tr>
+                                        <th>Característica</th>
+                                        <th>CISC (Complex Instruction Set)</th>
+                                        <th>RISC (Reduced Instruction Set)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Instrucciones</strong></td>
+                                        <td>Amplio catálogo (100-300+). Complejas y de longitud variable.</td>
+                                        <td>Reducido catálogo (30-80). Simples y de longitud fija (1 ciclo).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Decodificación</strong></td>
+                                        <td>Por microcódigo en hardware muy complejo.</td>
+                                        <td>Decodificación directa por hardware cableado veloz.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Acceso a Memoria</strong></td>
+                                        <td>Múltiples instrucciones acceden directamente a RAM.</td>
+                                        <td>Solo instrucciones LOAD y STORE acceden a RAM; resto en registros.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Ejemplos</strong></td>
+                                        <td>Intel x86 (computadoras personales), AMD.</td>
+                                        <td>PIC de Microchip, ARM (smartphones, embebidos), RISC-V.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-4">3. Componentes Integrados de un Microcontrolador (µC)</h3>
+                        <p class="text-on-surface-variant mb-4">A diferencia de un microprocesador que requiere chips externos, el microcontrolador es un sistema completo integrado en un solo encapsulado de silicio:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-primary text-sm mb-2">Memoria Flash (ROM)</h4>
+                                <p class="text-xs text-on-surface-variant">Almacena de forma no volátil el código del programa compilado para que se mantenga al apagar el sistema.</p>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-secondary text-sm mb-2">Memoria RAM</h4>
+                                <p class="text-xs text-on-surface-variant">Almacena las variables temporales y registros de estado durante el funcionamiento activo.</p>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-primary text-sm mb-2">Periféricos de E/S</h4>
+                                <p class="text-xs text-on-surface-variant">Puertos de entrada/salida digital (GPIO), Convertidor Analógico-Digital (ADC) y Temporizadores (Timers).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tertiary Sub-branch Link -->
+                    <div class="flex justify-center my-8">
+                        <div onclick="triggerBranchTransition('node-4-sub', 'node-4')" class="glass-card rounded-full px-5 py-3 flex items-center justify-between gap-3 cursor-pointer border border-white/10 hover:border-primary/50 transition-all duration-300 w-64 text-center">
+                            <div class="flex items-center gap-2 mx-auto">
+                                <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-[0_0_8px_#4f46e5]"></span>
+                                <span class="font-headline-lg-mobile text-sm font-semibold text-primary">Detalles U-IV (Sub-Rama PIC)</span>
+                                <span class="material-symbols-outlined text-xs text-on-surface-variant">arrow_forward_ios</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -462,6 +558,333 @@
                         <h3 class="text-lg font-bold text-primary mb-4">1. Entornos del Microcontrolador</h3>
                         <p class="text-on-surface-variant mb-4">El flujo de diseño combina la compilación en MPLAB X (C/Ensamblador) para generar el ejecutable binario `.hex` que luego se inyecta en el simulador electrónico PROTEUS para su depuración.</p>
                     </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-4">2. Nemónicos más comunes en Microcontroladores PIC</h3>
+                        <p class="text-on-surface-variant mb-4">El lenguaje ensamblador de los microcontroladores PIC (arquitectura RISC de Microchip) consta de un conjunto reducido de instrucciones (usualmente 35 para la gama media):</p>
+                        <div class="registers-table-wrap">
+                            <table class="data-table small-text">
+                                <thead>
+                                    <tr>
+                                        <th>Nemónico</th>
+                                        <th>Significado</th>
+                                        <th>Descripción Breve</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>BSF f, b</strong></td>
+                                        <td>Bit Set File</td>
+                                        <td>Pone en estado alto (1 lógico) el bit 'b' del registro 'f'.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>BCF f, b</strong></td>
+                                        <td>Bit Clear File</td>
+                                        <td>Pone en estado bajo (0 lógico) el bit 'b' del registro 'f'.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>MOVLW k</strong></td>
+                                        <td>Move Literal to W</td>
+                                        <td>Carga el valor constante 'k' en el registro de trabajo acumulador (W).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>MOVWF f</strong></td>
+                                        <td>Move W to File</td>
+                                        <td>Copia el contenido del registro de trabajo W en el registro 'f'.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>BTFSS f, b</strong></td>
+                                        <td>Bit Test File Skip if Set</td>
+                                        <td>Prueba el bit 'b' de 'f', y se salta la instrucción siguiente si es '1'.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-4">3. Directivas de Ensamblador</h3>
+                        <p class="text-on-surface-variant mb-4">Las directivas no generan código binario ejecutable directamente. En su lugar, dan órdenes específicas al ensamblador (compilador) durante el proceso:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-primary text-sm mb-1">EQU (Equate)</h4>
+                                <p class="text-xs text-on-surface-variant">Asigna un nombre simbólico a una constante de datos o dirección de memoria (ej. `PORTB EQU 0x06`).</p>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-secondary text-sm mb-1">ORG (Origin)</h4>
+                                <p class="text-xs text-on-surface-variant">Define la dirección física de la memoria del programa donde se colocará el código a continuación.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tertiary Sub-branch Link -->
+                    <div class="flex justify-center my-8">
+                        <div onclick="triggerBranchTransition('node-5-sub', 'node-5')" class="glass-card rounded-full px-5 py-3 flex items-center justify-between gap-3 cursor-pointer border border-white/10 hover:border-primary/50 transition-all duration-300 w-64 text-center">
+                            <div class="flex items-center gap-2 mx-auto">
+                                <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-[0_0_8px_#4f46e5]"></span>
+                                <span class="font-headline-lg-mobile text-sm font-semibold text-primary">Detalles U-V (Configuración y Fuses)</span>
+                                <span class="material-symbols-outlined text-xs text-on-surface-variant">arrow_forward_ios</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Sub-Rama Unidad III (Modos e Instrucciones) -->
+            <div id="panel-node-3-sub" class="content-panel">
+                <div class="panel-header">
+                    <button onclick="triggerBranchTransition('node-3', 'node-3-sub')" class="btn-back px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-primary transition-all">&larr; Volver a Unidad III</button>
+                    <h2 class="text-xl font-bold font-display-lg ml-4">Sub-Rama III-A: Modos de Direccionamiento e Instrucciones ix86</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-4">1. Modos de Direccionamiento en Intel 8086</h3>
+                        <p class="text-on-surface-variant mb-4">Los modos de direccionamiento especifican la forma en que el procesador calcula la dirección física del operando con el que va a trabajar:</p>
+                        <div class="registers-table-wrap">
+                            <table class="data-table small-text">
+                                <thead>
+                                    <tr>
+                                        <th>Modo</th>
+                                        <th>Descripción</th>
+                                        <th>Ejemplo en Ensamblador</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Inmediato</strong></td>
+                                        <td>El operando constante se encuentra especificado en la propia instrucción.</td>
+                                        <td><code>MOV AX, 0005h</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Registro</strong></td>
+                                        <td>Los datos sobre los que se opera se localizan en los registros internos del microprocesador.</td>
+                                        <td><code>MOV AX, BX</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Directo</strong></td>
+                                        <td>La instrucción contiene directamente la dirección física de la memoria donde está el operando.</td>
+                                        <td><code>MOV AX, [1234h]</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Indirecto por Registro</strong></td>
+                                        <td>La dirección de memoria está almacenada en un registro de base o índice (BX, BP, SI, DI).</td>
+                                        <td><code>MOV AX, [BX]</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-4">2. Repertorio de Instrucciones Básicas</h3>
+                        <p class="text-on-surface-variant mb-4">Las instrucciones del 8086 se dividen en diferentes categorías según su función operativa:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-primary mb-2">Transferencia de Datos</h4>
+                                <p class="text-xs text-on-surface-variant mb-2">Permiten mover datos de un lugar a otro sin alterarlos.</p>
+                                <ul class="list-disc list-inside text-xs text-on-surface-variant/80 space-y-1">
+                                    <li><code>MOV dest, orig</code> (Copiar datos).</li>
+                                    <li><code>PUSH / POP</code> (Operaciones de pila).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-secondary mb-2">Aritméticas y Lógicas</h4>
+                                <p class="text-xs text-on-surface-variant mb-2">Realizan cálculos matemáticos y comparaciones booleanas.</p>
+                                <ul class="list-disc list-inside text-xs text-on-surface-variant/80 space-y-1">
+                                    <li><code>ADD / SUB</code> (Suma y resta).</li>
+                                    <li><code>INC / DEC</code> (Incrementar y decrementar).</li>
+                                    <li><code>AND / OR / XOR / NOT</code> (Operaciones de bits).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Footer -->
+                    <div class="flex justify-between items-center mt-12 pt-6 border-t border-white/10 gap-4">
+                        <button onclick="triggerBranchTransition('node-2', 'node-3-sub')" class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/30 rounded-xl text-sm text-primary transition-all duration-300">
+                            <span class="material-symbols-outlined text-sm">chevron_left</span> Unidad II
+                        </button>
+                        <button onclick="triggerBranchTransition('node-3', 'node-3-sub')" class="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 rounded-xl text-sm text-primary transition-all duration-300">
+                            <span class="material-symbols-outlined text-sm">assignment</span> Principal U. III
+                        </button>
+                        <button onclick="closePanel('node-3-sub')" class="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 rounded-xl text-sm text-primary transition-all duration-300">
+                            <span class="material-symbols-outlined text-sm">hub</span> Mapa
+                        </button>
+                        <button onclick="triggerBranchTransition('node-4', 'node-3-sub')" class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/30 rounded-xl text-sm text-primary transition-all duration-300">
+                            Unidad IV <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Sub-Rama Unidad IV (Detalles de Arquitectura) -->
+            <div id="panel-node-4-sub" class="content-panel">
+                <div class="panel-header">
+                    <button onclick="triggerBranchTransition('node-4', 'node-4-sub')" class="btn-back px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-primary transition-all">&larr; Volver a Unidad IV</button>
+                    <h2 class="text-xl font-bold font-display-lg ml-4">Sub-Rama IV-A: Detalles de la Arquitectura del Microcontrolador PIC16F877A</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-4">1. Ciclo de Instrucción Máquina (Q-Cycles)</h3>
+                        <p class="text-on-surface-variant mb-4">En los microcontroladores PIC, el oscilador principal se divide internamente por 4 para generar el reloj interno del procesador. Cada ciclo de instrucción consta de cuatro ciclos de reloj internos denominados **Q1, Q2, Q3 y Q4**:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <span class="font-mono text-indigo-400 font-bold text-lg">Q1</span>
+                                <h5 class="text-xs font-bold mt-1 text-primary">Decodificación</h5>
+                                <p class="text-[11px] text-on-surface-variant/80 mt-1">Se lee la instrucción del bus de código y se decodifica en la UC.</p>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <span class="font-mono text-indigo-400 font-bold text-lg">Q2</span>
+                                <h5 class="text-xs font-bold mt-1 text-primary">Lectura de Datos</h5>
+                                <p class="text-[11px] text-on-surface-variant/80 mt-1">Se lee el operando o registro de la memoria RAM de datos.</p>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <span class="font-mono text-indigo-400 font-bold text-lg">Q3</span>
+                                <h5 class="text-xs font-bold mt-1 text-primary">Procesamiento</h5>
+                                <p class="text-[11px] text-on-surface-variant/80 mt-1">La ALU procesa la información aplicando la operación lógica/aritmética.</p>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <span class="font-mono text-indigo-400 font-bold text-lg">Q4</span>
+                                <h5 class="text-xs font-bold mt-1 text-primary">Escritura</h5>
+                                <p class="text-[11px] text-on-surface-variant/80 mt-1">Se escribe el resultado de vuelta en el registro destino.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-4">2. Organización de la Memoria de Datos (Bancos)</h3>
+                        <p class="text-on-surface-variant mb-4">El PIC16F877A divide su memoria de datos RAM en **4 bancos** (Banco 0 a Banco 3) de 128 bytes cada uno. Para acceder a registros ubicados en distintos bancos, es necesario configurar los bits de selección de banco **RP0** y **RP1** en el registro **STATUS**:</p>
+                        <div class="registers-table-wrap">
+                            <table class="data-table small-text">
+                                <thead>
+                                    <tr>
+                                        <th>Banco</th>
+                                        <th>RP1:RP0</th>
+                                        <th>Registros Clave de Ejemplo</th>
+                                        <th>Propósito</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Banco 0</strong></td>
+                                        <td>00</td>
+                                        <td>PORTA, PORTB, PORTC, PORTD, PORTE</td>
+                                        <td>Permiten leer o escribir los valores de voltaje físico en los pines.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Banco 1</strong></td>
+                                        <td>01</td>
+                                        <td>TRISA, TRISB, TRISC, TRISD, TRISE, ADCON1</td>
+                                        <td>Configuración de dirección (1=Entrada, 0=Salida) y modo del ADC.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Banco 2</strong></td>
+                                        <td>10</td>
+                                        <td>EEDATA, EEADR, EEDATH</td>
+                                        <td>Acceso a la memoria EEPROM de datos interna.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Banco 3</strong></td>
+                                        <td>11</td>
+                                        <td>EECON1, EECON2</td>
+                                        <td>Registros de control de escritura y borrado para la EEPROM/Flash.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Footer -->
+                    <div class="flex justify-between items-center mt-12 pt-6 border-t border-white/10 gap-4">
+                        <button onclick="triggerBranchTransition('node-3', 'node-4-sub')" class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/30 rounded-xl text-sm text-primary transition-all duration-300">
+                            <span class="material-symbols-outlined text-sm">chevron_left</span> Unidad III
+                        </button>
+                        <button onclick="triggerBranchTransition('node-4', 'node-4-sub')" class="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 rounded-xl text-sm text-primary transition-all duration-300">
+                            <span class="material-symbols-outlined text-sm">assignment</span> Principal U. IV
+                        </button>
+                        <button onclick="closePanel('node-4-sub')" class="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 rounded-xl text-sm text-primary transition-all duration-300">
+                            <span class="material-symbols-outlined text-sm">hub</span> Mapa
+                        </button>
+                        <button onclick="triggerBranchTransition('node-5', 'node-4-sub')" class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/30 rounded-xl text-sm text-primary transition-all duration-300">
+                            Unidad V <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Sub-Rama Unidad V (Fuses y Compilación) -->
+            <div id="panel-node-5-sub" class="content-panel">
+                <div class="panel-header">
+                    <button onclick="triggerBranchTransition('node-5', 'node-5-sub')" class="btn-back px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-primary transition-all">&larr; Volver a Unidad V</button>
+                    <h2 class="text-xl font-bold font-display-lg ml-4">Sub-Rama V-A: Detalles de Compilación y Palabra de Configuración (Fuses)</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-4">1. La Palabra de Configuración (Fuses)</h3>
+                        <p class="text-on-surface-variant mb-4">Los Fuses son registros especiales que se configuran únicamente al momento de grabar el código binario en el chip. Definen el comportamiento del hardware antes de ejecutar el programa principal:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-primary text-sm mb-1">Oscillators (OSC)</h4>
+                                <p class="text-xs text-on-surface-variant">Selecciona el tipo de reloj externo. **HS** (High Speed Crystal, >4MHz), **XT** (Cristal estándar, <4MHz), o **RC** (Resistencia-Capacitor económico).</p>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-secondary text-sm mb-1">Watchdog Timer (WDT)</h4>
+                                <p class="text-xs text-on-surface-variant">Temporizador de seguridad ("Perro guardián") que reinicia automáticamente el chip si el programa se queda congelado en un ciclo infinito.</p>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-secondary text-sm mb-1">Power-up Timer (PWRTE)</h4>
+                                <p class="text-xs text-on-surface-variant">Retrasa el inicio de la ejecución por unos milisegundos tras energizar el chip para asegurar que el voltaje de alimentación sea estable.</p>
+                            </div>
+                            <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                <h4 class="font-bold text-primary text-sm mb-1">Low Voltage Programming (LVP)</h4>
+                                <p class="text-xs text-on-surface-variant">Permite programar el chip con 5V en vez de los 13V estándar en el pin MCLR, a cambio de deshabilitar un pin digital.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-4">2. Estructura de Plantilla Ensamblador (MPLAB X)</h3>
+                        <p class="text-on-surface-variant mb-3">Plantilla típica para configurar los puertos de salida y ciclar un parpadeo de LED:</p>
+                        <pre class="p-4 bg-black/40 font-mono text-xs text-cyan-300/80 leading-relaxed rounded-xl overflow-y-auto select-none" style="max-height: 250px;"><code>LIST P=16F877A
+INCLUDE "P16F877A.INC"
+
+; Configuración de Fuses
+__CONFIG _CP_OFF & _WDT_OFF & _BODEN_OFF & _PWRTE_ON & _XT_OSC & _WRT_OFF & _LVP_OFF
+
+ORG 0x00             ; Vector de Reset
+GOTO Inicio
+
+ORG 0x05             ; Inicio de Programa
+Inicio:
+    BSF STATUS, RP0  ; Cambiar a Banco 1
+    BCF TRISB, 0     ; Configurar Pin RB0 como Salida
+    BCF STATUS, RP0  ; Volver a Banco 0
+
+BuclePrincipal:
+    BSF PORTB, 0     ; Encender RB0
+    ; ... Llamado a Subrutina de Retardo ...
+    BCF PORTB, 0     ; Apagar RB0
+    ; ... Llamado a Subrutina de Retardo ...
+    GOTO BuclePrincipal
+
+END                  ; Fin de Archivo</code></pre>
+                    </div>
+
+                    <!-- Navigation Footer -->
+                    <div class="flex justify-between items-center mt-12 pt-6 border-t border-white/10 gap-4">
+                        <button onclick="triggerBranchTransition('node-4', 'node-5-sub')" class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/30 rounded-xl text-sm text-primary transition-all duration-300">
+                            <span class="material-symbols-outlined text-sm">chevron_left</span> Unidad IV
+                        </button>
+                        <button onclick="triggerBranchTransition('node-5', 'node-5-sub')" class="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 rounded-xl text-sm text-primary transition-all duration-300">
+                            <span class="material-symbols-outlined text-sm">assignment</span> Principal U. V
+                        </button>
+                        <button onclick="closePanel('node-5-sub')" class="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 hover:bg-primary/20 rounded-xl text-sm text-primary transition-all duration-300">
+                            <span class="material-symbols-outlined text-sm">hub</span> Mapa
+                        </button>
+                        <button onclick="triggerBranchTransition('node-6', 'node-5-sub')" class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/30 rounded-xl text-sm text-primary transition-all duration-300">
+                            emu8086 <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -469,14 +892,63 @@
             <div id="panel-node-6" class="content-panel">
                 <div class="panel-header">
                     <button onclick="closePanel('node-6')" class="btn-back px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-primary transition-all">&larr; Volver al Tronco</button>
-                    <h2 class="text-xl font-bold font-display-lg ml-4">Tutorial de emu8086</h2>
+                    <h2 class="text-xl font-bold font-display-lg ml-4">Tutorial de Programación en emu8086</h2>
                 </div>
-                <div class="panel-body flex items-center justify-center">
-                    <div class="coming-soon-card p-8 rounded-2xl border border-white/10 bg-white/5 text-center max-w-sm">
-                        <div class="coming-soon-icon text-4xl mb-4">⏳</div>
-                        <h3 class="text-lg font-bold text-secondary mb-2">Próximamente</h3>
-                        <p class="text-xs text-on-surface-variant mb-4">Este tutorial se encuentra en desarrollo. El autor Mendell Noe Parrales Molina integrará este contenido de emu8086 próximamente para completar la experiencia práctica.</p>
-                        <div class="text-xs font-label-mono text-primary/75">Mendell Parrales - 20201014U</div>
+                <div class="panel-body">
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-2">Paso 1: Escribir el Código en el Editor</h3>
+                        <p class="text-sm text-on-surface-variant mb-4">El primer paso consiste en abrir el entorno emu8086, crear un nuevo archivo de plantilla `COM template` y escribir el código fuente en ensamblador de la familia ix86. Aquí definimos instrucciones aritméticas directas cargando valores y realizando una suma lógica.</p>
+                        
+                        <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black/30 min-h-[220px] flex flex-col items-center justify-center p-6 text-center my-4">
+                            <img src="assets/images/emu8086/1.png" alt="Paso 1: Editor de emu8086" class="rounded-lg max-h-[300px] object-contain mx-auto shadow-lg" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                            <div class="fallback-placeholder hidden flex flex-col items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-4xl text-primary">image</span>
+                                <span class="text-xs font-bold font-label-mono text-primary/80">SOLICITUD DE CAPTURA: emu8086/1.png</span>
+                                <p class="text-[11px] text-on-surface-variant/75 max-w-sm">Toma una captura de la interfaz de emu8086 mostrando el código de prueba en el editor y guárdala en <code>assets/images/emu8086/1.png</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-2">Paso 2: Compilación y Emulación</h3>
+                        <p class="text-sm text-on-surface-variant mb-4">Haz clic en el botón **"Emulate"** de la barra de herramientas superior. Esto iniciará el ensamblado y abrirá dos ventanas principales: el **Emulator** (que simula el procesador y sus registros) y el visor de código de máquina traducido.</p>
+                        
+                        <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black/30 min-h-[220px] flex flex-col items-center justify-center p-6 text-center my-4">
+                            <img src="assets/images/emu8086/2.png" alt="Paso 2: Compilación y Ventana Emulator" class="rounded-lg max-h-[300px] object-contain mx-auto shadow-lg" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                            <div class="fallback-placeholder hidden flex flex-col items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-4xl text-primary">image</span>
+                                <span class="text-xs font-bold font-label-mono text-primary/80">SOLICITUD DE CAPTURA: emu8086/2.png</span>
+                                <p class="text-[11px] text-on-surface-variant/75 max-w-sm">Toma una captura de la ventana del emulador con los registros en su estado inicial y guárdala en <code>assets/images/emu8086/2.png</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-2">Paso 3: Depuración y Avance por Instrucción (Single Step)</h3>
+                        <p class="text-sm text-on-surface-variant mb-4">Para analizar cómo funciona la CPU de forma interna, pulsa en **"Single Step"**. El puntero de instrucciones (`IP`) avanzará línea por línea. Podrás observar cómo se actualizan los valores de los registros generales (AX, BX, CX, DX) en tiempo real en la barra de registros izquierda.</p>
+                        
+                        <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black/30 min-h-[220px] flex flex-col items-center justify-center p-6 text-center my-4">
+                            <img src="assets/images/emu8086/3.png" alt="Paso 3: Depuración paso a paso" class="rounded-lg max-h-[300px] object-contain mx-auto shadow-lg" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                            <div class="fallback-placeholder hidden flex flex-col items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-4xl text-primary">image</span>
+                                <span class="text-xs font-bold font-label-mono text-primary/80">SOLICITUD DE CAPTURA: emu8086/3.png</span>
+                                <p class="text-[11px] text-on-surface-variant/75 max-w-sm">Toma una captura durante la simulación activa mostrando el valor de AX e IP actualizados tras un paso, y guárdala en <code>assets/images/emu8086/3.png</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-2">Paso 4: Análisis del Estado de Banderas (Flags)</h3>
+                        <p class="text-sm text-on-surface-variant mb-4">Haz clic en el botón **"Flags"** en la ventana del emulador. Se desplegará un menú flotante con los bits individuales de registro de estado. Podrás ver cuándo se activa la bandera de Cero (ZF), Signo (SF) o Acarreo (CF) tras realizar operaciones lógicas o aritméticas específicas.</p>
+                        
+                        <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black/30 min-h-[220px] flex flex-col items-center justify-center p-6 text-center my-4">
+                            <img src="assets/images/emu8086/4.png" alt="Paso 4: Ventana de Banderas" class="rounded-lg max-h-[300px] object-contain mx-auto shadow-lg" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                            <div class="fallback-placeholder hidden flex flex-col items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-4xl text-primary">image</span>
+                                <span class="text-xs font-bold font-label-mono text-primary/80">SOLICITUD DE CAPTURA: emu8086/4.png</span>
+                                <p class="text-[11px] text-on-surface-variant/75 max-w-sm">Toma una captura con la ventana flotante de Flags visible al lado del emulador y guárdala en <code>assets/images/emu8086/4.png</code></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -485,14 +957,73 @@
             <div id="panel-node-7" class="content-panel">
                 <div class="panel-header">
                     <button onclick="closePanel('node-7')" class="btn-back px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-primary transition-all">&larr; Volver al Tronco</button>
-                    <h2 class="text-xl font-bold font-display-lg ml-4">Tutorial de Arduino</h2>
+                    <h2 class="text-xl font-bold font-display-lg ml-4">Tutorial de Arduino y Simulación en Proteus</h2>
                 </div>
-                <div class="panel-body flex items-center justify-center">
-                    <div class="coming-soon-card p-8 rounded-2xl border border-white/10 bg-white/5 text-center max-w-sm">
-                        <div class="coming-soon-icon text-4xl mb-4">🔌</div>
-                        <h3 class="text-lg font-bold text-secondary mb-2">Próximamente</h3>
-                        <p class="text-xs text-on-surface-variant mb-4">Este tutorial se encuentra en desarrollo. El autor Mendell Noe Parrales Molina integrará este contenido de Arduino próximamente para completar la experiencia práctica.</p>
-                        <div class="text-xs font-label-mono text-primary/75">Mendell Parrales - 20201014U</div>
+                <div class="panel-body">
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-2">Paso 1: Escribir y Compilar en Arduino IDE</h3>
+                        <p class="text-sm text-on-surface-variant mb-4">Abre Arduino IDE y escribe el código de control del circuito. Usamos el sketch de ejemplo clásico **Blink** para configurar el pin digital 13 como salida y hacerlo parpadear. Haz clic en **"Verificar"** para asegurarte de que no haya errores de sintaxis y generar el archivo binario ejecutable `.hex`.</p>
+                        
+                        <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black/30 min-h-[220px] flex flex-col items-center justify-center p-6 text-center my-4">
+                            <img src="assets/images/arduino/1.png" alt="Paso 1: Arduino IDE y Compilación" class="rounded-lg max-h-[300px] object-contain mx-auto shadow-lg" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                            <div class="fallback-placeholder hidden flex flex-col items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-4xl text-primary">image</span>
+                                <span class="text-xs font-bold font-label-mono text-primary/80">SOLICITUD DE CAPTURA: arduino/1.png</span>
+                                <p class="text-[11px] text-on-surface-variant/75 max-w-sm">Toma una captura de Arduino IDE con el código compilado exitosamente y guárdala en <code>assets/images/arduino/1.png</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-2">Paso 2: Diseñar el Circuito en Proteus</h3>
+                        <p class="text-sm text-on-surface-variant mb-4">Abre Proteus en modo ISIS/Diseño de esquemas. Selecciona e introduce los componentes requeridos: la placa **Arduino Uno (Simulino)**, un diodo **LED** (color a elección) y una **resistencia de 220 Ohms** conectada en serie a la toma de Tierra (GND).</p>
+                        
+                        <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black/30 min-h-[220px] flex flex-col items-center justify-center p-6 text-center my-4">
+                            <img src="assets/images/arduino/2.png" alt="Paso 2: Diseño en Proteus" class="rounded-lg max-h-[300px] object-contain mx-auto shadow-lg" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                            <div class="fallback-placeholder hidden flex flex-col items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-4xl text-primary">image</span>
+                                <span class="text-xs font-bold font-label-mono text-primary/80">SOLICITUD DE CAPTURA: arduino/2.png</span>
+                                <p class="text-[11px] text-on-surface-variant/75 max-w-sm">Toma una captura del esquemático del circuito armado en Proteus y guárdala en <code>assets/images/arduino/2.png</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-2">Paso 3: Cargar el Firmware (.hex)</h3>
+                        <p class="text-sm text-on-surface-variant mb-4">Haz doble clic sobre el bloque de la placa Arduino en Proteus. En la ventana de propiedades que aparece, haz clic en el icono de carpeta de la casilla **"Program File"** y busca el archivo con extensión `.hex` o `.elf` generado durante la compilación en Arduino IDE.</p>
+                        
+                        <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black/30 min-h-[220px] flex flex-col items-center justify-center p-6 text-center my-4">
+                            <img src="assets/images/arduino/3.png" alt="Paso 3: Ventana de Propiedades de Carga" class="rounded-lg max-h-[300px] object-contain mx-auto shadow-lg" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                            <div class="fallback-placeholder hidden flex flex-col items-center gap-2 text-on-surface-variant">
+                                <span class="material-symbols-outlined text-4xl text-primary">image</span>
+                                <span class="text-xs font-bold font-label-mono text-primary/80">SOLICITUD DE CAPTURA: arduino/3.png</span>
+                                <p class="text-[11px] text-on-surface-variant/75 max-w-sm">Toma una captura de la ventana de propiedades con la ruta del archivo hexadecimal cargada y guárdala en <code>assets/images/arduino/3.png</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5 mb-6">
+                        <h3 class="text-lg font-bold text-primary mb-2">Paso 4: Simulación Activa (Ciclo Encendido / Apagado)</h3>
+                        <p class="text-sm text-on-surface-variant mb-4">Haz clic en el botón **Play (Iniciar Simulación)** en la esquina inferior izquierda de la pantalla en Proteus. El programa comenzará a ejecutarse y verás el LED físico simulado brillar de acuerdo a los tiempos del retardo (`delay`) configurados.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black/30 min-h-[180px] flex flex-col items-center justify-center p-4 text-center">
+                                <img src="assets/images/arduino/4.png" alt="Paso 4: LED Encendido" class="rounded-lg max-h-[220px] object-contain mx-auto shadow-lg" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                                <div class="fallback-placeholder hidden flex flex-col items-center gap-2 text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-3xl text-primary">lightbulb</span>
+                                    <span class="text-xs font-bold font-label-mono text-primary/80">CAPTURA: arduino/4.png</span>
+                                    <p class="text-[10px] text-on-surface-variant/75">LED encendido.</p>
+                                </div>
+                            </div>
+                            <div class="relative rounded-xl overflow-hidden border border-white/10 bg-black/30 min-h-[180px] flex flex-col items-center justify-center p-4 text-center">
+                                <img src="assets/images/arduino/5.png" alt="Paso 4: LED Apagado" class="rounded-lg max-h-[220px] object-contain mx-auto shadow-lg" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                                <div class="fallback-placeholder hidden flex flex-col items-center gap-2 text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-3xl text-primary">lightbulb_outline</span>
+                                    <span class="text-xs font-bold font-label-mono text-primary/80">CAPTURA: arduino/5.png</span>
+                                    <p class="text-[10px] text-on-surface-variant/75">LED apagado.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -631,52 +1162,7 @@ ADD AX, BX ejecutado. Estado del acumulador actualizado.</pre>
                 </div>
             </div>
 
-            <!-- Panel Cuestionarios (Quiz) -->
-            <div id="panel-node-9" class="content-panel">
-                <div class="panel-header">
-                    <button onclick="closePanel('node-9')" class="btn-back px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-primary transition-all">&larr; Volver al Tronco</button>
-                    <h2 class="text-xl font-bold font-display-lg ml-4">Autoevaluación de Conocimientos</h2>
-                </div>
-                <div class="panel-body">
-                    <div class="card p-6 rounded-2xl glass-card border border-white/10 bg-white/5">
-                        <h3 class="text-lg font-bold text-primary mb-4">Cuestionario de Unidad</h3>
-                        <div class="quiz-controls-wrap mb-4">
-                            <label for="quiz-unit-select" class="text-xs text-on-surface-variant font-bold uppercase mb-2">Selecciona la Unidad a Evaluar:</label>
-                            <select id="quiz-unit-select" onchange="loadQuiz()" class="bg-[#1b1f2b] border border-white/10 text-white rounded-lg p-2 w-full max-w-xs">
-                                <option value="1">Unidad I: Conceptos Básicos</option>
-                                <option value="2">Unidad II: Arquitectura del Procesador</option>
-                                <option value="3">Unidad III: Ensamblador ix86</option>
-                                <option value="4">Unidad IV: Conceptos de Microcontroladores</option>
-                                <option value="5">Unidad V: Programación de Microcontroladores</option>
-                            </select>
-                        </div>
-                        <!-- Quiz Container -->
-                        <div class="quiz-container bg-[#171b27] border border-white/10 rounded-xl p-6" id="quiz-box">
-                            <div class="quiz-header border-b border-white/5 pb-2 mb-4">
-                                <span class="quiz-qnum text-xs text-primary font-bold tracking-wider" id="quiz-question-number">Pregunta 1 de 3</span>
-                            </div>
-                            <div class="quiz-body mb-6">
-                                <h4 class="quiz-qtext text-base font-bold text-white mb-4" id="quiz-question-text">¿Qué representa el conjunto de instrucciones (ISA)?</h4>
-                                <div class="quiz-options-list flex flex-col gap-2" id="quiz-options">
-                                    <!-- Options injected via JS -->
-                                </div>
-                            </div>
-                            <div class="quiz-footer flex justify-end border-t border-white/5 pt-4">
-                                <button id="quiz-btn-submit" class="btn btn-primary bg-primary-container px-4 py-2 rounded-lg text-sm text-white font-bold" onclick="submitQuizAnswer()">Enviar Respuesta</button>
-                                <button id="quiz-btn-next" class="btn btn-accent bg-tertiary-container px-4 py-2 rounded-lg text-sm text-white font-bold d-none" onclick="nextQuizQuestion()">Siguiente Pregunta</button>
-                            </div>
-                        </div>
-                        <!-- Results -->
-                        <div class="quiz-results-card d-none bg-[#171b27] border border-white/10 rounded-xl p-6 text-center" id="quiz-results">
-                            <div class="glow-border"></div>
-                            <h4 class="text-lg font-bold text-white mb-2">Resultado de la Evaluación</h4>
-                            <div class="result-score text-4xl font-extrabold text-primary my-4" id="quiz-score-val">2 / 3</div>
-                            <p id="quiz-result-feedback" class="text-sm text-on-surface-variant mb-4">¡Buen trabajo!</p>
-                            <button class="btn btn-secondary px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-sm text-white" onclick="restartQuiz()">Reintentar Cuestionario</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Panel Cuestionarios (Quiz) removed -->
 
         </div>
     </main>

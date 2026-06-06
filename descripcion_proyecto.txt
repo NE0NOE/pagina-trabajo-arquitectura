@@ -1,0 +1,54 @@
+DESCRIPCION DEL PROYECTO: TRABAJO DE ARQUITECTURA DE MAQUINAS
+
+Este proyecto consiste en una aplicacion web interactiva disenada para servir de portafolio y guia educativa de las practicas y unidades academicas de la asignatura de Arquitectura de Maquinas.
+
+Autor: Mendell Noe Parrales Molina
+ID: 20201014U
+Institucion: UNI - Nicaragua
+Ano: 2026
+
+--------------------------------------------------------------------------------
+ESTRUCTURA DE CONTENIDOS (UNIDADES Y SIMULADORES)
+--------------------------------------------------------------------------------
+
+1. Unidad I: Introduccion a los Microprocesadores y Microcontroladores
+   - Conceptos basicos de Arquitectura (atributos visibles al programador/ISA) y Organizacion de Computadoras (unidades de hardware e interconexiones).
+   - Estructura y funciones basicas de procesamiento, almacenamiento y transferencia de datos.
+
+2. Unidad II: Arquitectura del Microprocesador
+   - Analisis detallado del modelo Von Neumann.
+   - Simulador Interactivo de Buses Externos: Permite simular los flujos de senales a traves de animaciones interactivas del Bus de Direcciones (ilumina UC y memoria de codigo en cian), Bus de Datos (ilumina registros, ALU y memoria de variables en rosa) y Bus de Control (ilumina UC, ALU, y slots de memoria en amarillo).
+
+3. Unidad III: Programacion del Microprocesador ix86
+   - Estructura de registros de 16 bits del procesador Intel 8086 (AX, BX, CX, DX, indices, punteros y registros de segmento).
+   - Sub-Rama III-A (Detalles Tecnicos): Teoria detallada de los modos de direccionamiento (Inmediato, Registro, Directo, Indirecto) y repertorio basico de instrucciones de maquina (Transferencia, Aritmeticas, Logicas).
+
+4. Unidad IV: Arquitectura de los Microcontroladores
+   - Comparativa de arquitecturas Harvard vs Von Neumann y filosofias de diseno RISC vs CISC.
+   - Componentes internos integrados (ROM Flash, RAM, GPIOs, Timers, ADC).
+   - Sub-Rama IV-A (Detalles Tecnicos): Analisis del ciclo de instruccion maquina en microcontroladores PIC (Q-Cycles: Q1-Decodificar, Q2-Leer, Q3-Procesar, Q4-Escribir), la Pila (Stack) de hardware y los registros de estado SFR de uso comun.
+
+5. Unidad V: Programadores del Microcontrolador
+   - Flujo de desarrollo practico integrando MPLAB X (compilador) y PROTEUS (simulador electronico).
+   - Repertorio de instrucciones nemonicas de gama media PIC (BSF, BCF, MOVLW, MOVWF, BTFSS) y directivas del ensamblador (ORG, EQU).
+   - Sub-Rama V-A (Detalles Tecnicos): La palabra de configuracion electronica (Fuses como OSC, WDT, PWRTE, LVP) y plantillas tipicas de programacion.
+
+6. Tutorial emu8086
+   - Guia visual paso a paso para la creacion, compilacion, depuracion monousuario (Single Step) y lectura del registro de banderas (Flags) utilizando capturas de pantalla de la practica.
+
+7. Tutorial Arduino y Proteus
+   - Guia visual detallada del proceso de programacion del sketch Blink en Arduino IDE, el diseno del circuito en PROTEUS utilizando la placa Simulino Uno, la inyeccion del archivo binario (.hex) y la validacion del funcionamiento del LED en encendido y apagado.
+
+8. Zona de Simuladores (Playground)
+   - Simulador de Ensamblador emu8086: Ejecuta paso a paso o de forma automatica codigos de prueba en ensamblador 8086 (como sumas, bucles y condicionales), mostrando la actualizacion en tiempo real del Program Counter (IP), Registros de proposito general y banderas.
+   - Simulador de Placa Arduino: Simula interactivamente la ejecucion en bucle del codigo Blink en una placa Arduino Uno virtual, encendiendo y apagando un LED grafico y destellando los pines de comunicacion RX/TX.
+
+--------------------------------------------------------------------------------
+CARACTERISTICAS TECNICAS Y DE DISENO
+--------------------------------------------------------------------------------
+
+- Interfaz Premium: Disenada con estetica moderna en modo oscuro, combinando HSL Tailored Colors, efectos de desenfoque de fondo (backdrop-blur) y transiciones fluidas de paneles de contenido.
+- Mapa de Ramificaciones Constelacion (Arbol SVG): La pantalla de inicio contiene un tronco central que conecta a los nodos principales en una distribucion eliptica.
+- Rutas de Transicion de Pulsos (Pulse Paths): Al navegar entre temas, la aplicacion reproduce una animacion visual que simula la transmision de un pulso electrico a lo largo de las ramas del mapa antes de desplegar el panel de contenido.
+- Diseno Responsivo y Adaptable: Adaptado para su perfecta visualizacion tanto en dispositivos moviles como en computadores de escritorio.
+- Conmutador de Temas: Soporte completo para cambiar de forma interactiva entre el modo oscuro por defecto y un modo claro premium.
